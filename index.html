@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stop à l'Orpaillage Clandestin</title>
+  <style>
+    :root{
+      --bg:#0b1115;
+      --bg-2:#121d20;
+      --card:#162b2e;
+      --gold:#d3a64d;
+      --gold-2:#f0c76a;
+      --text:#edf6f4;
+      --muted:#bfd0ce;
+      --green:#75d89d;
+      --red:#ff6b6b;
+      --shadow:0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    *{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#0a1215,#111d20);
+      color:var(--text);
+      line-height:1.7;
+    }
+    a{text-decoration:none;color:inherit;}
+    img{max-width:100%;display:block;}
+    .container{width:min(1180px,92%);margin:0 auto;}
+    .btn{
+      display:inline-block;
+      padding:15px 26px;
+      border-radius:999px;
+      font-weight:700;
+      transition:.3s ease;
+      border:1px solid transparent;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--gold),var(--gold-2));
+      color:#0d1718;
+      box-shadow:0 10px 25px rgba(211,166,77,0.28);
+    }
+    .btn-primary:hover{transform:translateY(-2px);}
+    .btn-secondary{
+      background:transparent;
+      border-color:rgba(255,255,255,0.18);
+      color:var(--text);
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(11,17,21,0.82);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:72px;
+    }
+    .logo{
+      font-size:1.3rem;
+      font-weight:800;
+      color:var(--gold);
+      letter-spacing:.08em;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:25px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .nav-links a:hover{color:var(--text);}
+    .hero{
+      padding:70px 0 40px;
+      background:
+        linear-gradient(120deg, rgba(8,14,16,0.9), rgba(14,31,34,0.65)),
+        url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:40px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(211,166,77,0.12);
+      color:var(--gold-2);
+      font-size:.78rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+    h1{
+      font-size:clamp(2.8rem, 5vw, 5.2rem);
+      line-height:1.05;
+      margin:0 0 18px;
+    }
+    .hero p{
+      color:var(--muted);
+      font-size:1.08rem;
+      max-width:620px;
+      margin:0 0 26px;
+    }
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-bottom:28px;
+    }
+    .stats{
+      display:flex;gap:30px;flex-wrap:wrap;
+    }
+    .stat strong{
+      display:block;
+      font-size:1.8rem;
+      color:var(--gold-2);
+      margin-bottom:4px;
+    }
+    .stat span{
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .hero-card{
+      background:rgba(17,29,32,0.9);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hero-card img{
+      height:260px;
+      width:100%;
+      object-fit:cover;
+    }
+    .hero-card-body{
+      padding:22px 20px 18px;
+    }
+    .alert{
+      background:rgba(255,107,107,0.12);
+      color:#ffd3d3;
+      border:1px solid rgba(255,107,107,0.28);
+      border-radius:12px;
+      padding:12px 14px;
+      font-weight:600;
+      margin-bottom:14px;
+    }
+    .mini-list{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:12px;
+    }
+    .mini-list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:var(--muted);
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.04);
+      border-radius:12px;
+      padding:12px 14px;
+    }
+    .dot{
+      width:11px;height:11px;border-radius:50%;
+      background:var(--red);
+      margin-top:7px;
+      box-shadow:0 0 0 6px rgba(255,107,107,0.12);
+      flex-shrink:0;
+    }
+
+    section{padding:80px 0;}
+    .section-head{
+      text-align:center;
+      margin-bottom:42px;
+    }
+    .section-head h2{
+      margin:0 0 12px;
+      font-size:clamp(2.1rem, 4vw, 3.2rem);
+    }
+    .section-head p{
+      margin:0 auto;
+      max-width:720px;
+      color:var(--muted);
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:24px;
+    }
+    .card{
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:22px;
+      padding:28px 22px;
+      box-shadow:var(--shadow);
+    }
+    .icon-box{
+      width:62px;height:62px;
+      display:grid;place-items:center;
+      border-radius:18px;
+      background:rgba(117,216,157,0.12);
+      color:var(--green);
+      font-size:1.8rem;
+      margin-bottom:18px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:1.3rem;
+    }
+    .card p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    .impact-layout{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:center;
+    }
+    .impact-panel{
+      background:linear-gradient(180deg,rgba(21,48,52,0.9),rgba(12,21,23,0.9));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:26px;
+      padding:30px 24px;
+      box-shadow:var(--shadow);
+    }
+    .impact-panel ul{
+      list-style:none;
+      margin:0;padding:0;
+      display:grid;gap:16px;
+    }
+    .impact-panel li{
+      display:flex; gap:12px; align-items:flex-start;
+      color:var(--muted);
+    }
+    .check{
+      width:26px;height:26px;border-radius:50%;
+      background:rgba(117,216,157,0.12);
+      color:var(--green);
+      display:grid;place-items:center;
+      font-size:1rem;
+      font-weight:700;
+      flex-shrink:0;
+      margin-top:2px;
+    }
+
+    .image-block{
+      border-radius:26px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .image-block img{
+      width:100%;
+      height:100%;
+      min-height:420px;
+      object-fit:cover;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:18px;
+    }
+    .step{
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:20px;
+      padding:22px 18px;
+    }
+    .step-number{
+      width:42px;height:42px;border-radius:50%;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--gold),var(--gold-2));
+      color:#101a1c;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+    .step h4{margin:0 0 8px;font-size:1.15rem;}
+    .step p{margin:0;color:var(--muted);}
+
+    .cta{
+      background:linear-gradient(135deg,rgba(19,52,54,0.96),rgba(10,17,18,1));
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:30px;
+      padding:36px 26px;
+      text-align:center;
+    }
+    .cta h2{
+      margin:0 0 12px;
+      font-size:clamp(2rem,4vw,3rem);
+    }
+    .cta p{
+      max-width:700px;
+      margin:0 auto 10px;
+      color:var(--muted);
+    }
+    .cta-email {
+      display: inline-block;
+      margin: 12px 0 20px;
+      color: var(--gold-2);
+      font-weight: 700;
+      font-size: 1.05rem;
+      word-break: break-word;
+    }
+
+    footer{
+      padding:28px 0 50px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    @media (max-width: 900px){
+      .hero-grid,
+      .impact-layout,
+      .grid-3,
+      .steps{
+        grid-template-columns:1fr;
+      }
+      .nav-links{display:none;}
+      .hero{padding-top:40px;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">ORPAILLAGE</div>
+        <div class="nav-links">
+          <a href="#accueil">Accueil</a>
+          <a href="#impact">Impact</a>
+          <a href="#causes">Causes</a>
+          <a href="#actions">Actions</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <a href="#contact" class="btn btn-primary">Agir</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Sensibilisation</span>
+          <h1>Stop à l’orpaillage clandestin</h1>
+          <p>
+            Derrière l’exploitation illégale de l’or, se cachent des dégâts environnementaux,
+            sociaux et économiques majeurs. Ce phénomène détruit les sols, pollue les eaux
+            et met en danger les communautés les plus vulnérables.
+          </p>
+
+          <div class="cta-row">
+            <a href="#impact" class="btn btn-primary">Découvrir</a>
+            <a href="#actions" class="btn btn-secondary">Les solutions</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>300%</strong>
+              <span>de pression sur les sols</span>
+            </div>
+            <div class="stat">
+              <strong>Pollution</strong>
+              <span>des eaux et des rivières</span>
+            </div>
+            <div class="stat">
+              <strong>Danger</strong>
+              <span>pour les populations</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1000&q=80" alt="Site minier illégal">
+          <div class="hero-card-body">
+            <div class="alert">⚠️ Activité illégale et très dangereuse</div>
+            <ul class="mini-list">
+              <li><span class="dot"></span><span>Déforestation massive et destruction des habitats naturels</span></li>
+              <li><span class="dot"></span><span>Contamination des nappes et des rivières par les substances toxiques</span></li>
+              <li><span class="dot"></span><span>Risque pour la santé, la sécurité et le bien-être des habitants</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Les impacts dévastateurs</h2>
+          <p>
+            L’orpaillage clandestin ne touche pas uniquement la terre. Il affecte l’air,
+            l’eau, les écosystèmes, la santé humaine et même l’économie locale.
+          </p>
+        </div>
+
+        <div class="impact-layout">
+          <div class="impact-panel">
+            <ul>
+              <li><span class="check">✓</span><span>Destruction de la forêt et de la biodiversité locale.</span></li>
+              <li><span class="check">✓</span><span>Pollution des rivières et des ressources en eau potable.</span></li>
+              <li><span class="check">✓</span><span>Risque d’accidents graves et de maladies chez les travailleurs.</span></li>
+              <li><span class="check">✓</span><span>Fuite des revenus légitimes au profit de réseaux illégaux.</span></li>
+            </ul>
+          </div>
+
+          <div class="image-block">
+            <img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1000&q=80" alt="Pollution environnementale">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="causes">
+      <div class="container">
+        <div class="section-head">
+          <h2>Pourquoi cela se produit</h2>
+          <p>
+            Les racines du problème sont multiples : pauvreté, faiblesse des contrôles,
+            demande du marché et absence d’alternatives économiques durables.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon-box">💰</div>
+            <h3>Pauvreté</h3>
+            <p>
+              Beaucoup de personnes se lancent dans l’extraction illégale pour répondre
+              à des besoins immédiats et trouver un revenu.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box">⚖️</div>
+            <h3>Faible contrôle</h3>
+            <p>
+              L’absence de surveillance et de sanctions efficaces laisse libre cours à l’activité illicite.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box">🌍</div>
+            <h3>Demande mondiale</h3>
+            <p>
+              Le marché de l’or pousse certains acteurs à privilégier la profitabilité,
+              sans tenir compte de la destruction qu’ils provoquent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="actions">
+      <div class="container">
+        <div class="section-head">
+          <h2>Ce que nous pouvons faire</h2>
+          <p>
+            La lutte contre l’orpaillage clandestin passe par une action conjointe :
+            information, accompagnement, protection des ressources et renforcement des règles.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Informer</h4>
+            <p>Faire comprendre les conséquences réelles et durables de cette activité.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>Surveiller</h4>
+            <p>Renforcer le contrôle des zones sensibles et les dispositifs de sécurité.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Accompagner</h4>
+            <p>Proposer des solutions économiques plus sûres et plus durables aux communautés.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <h4>Agir ensemble</h4>
+            <p>Mobiliser les autorités, les ONG, les citoyens et les institutions locales.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="cta">
+          <h2>La vigilance protège notre environnement</h2>
+          <p>
+            Pour protéger les populations, préserver les ressources naturelles et garantir un avenir responsable,
+            il faut agir avant que les dégâts ne deviennent irréversibles.
+          </p>
+          <a href="mailto:cheiktraore321@gmail.com" class="cta-email">cheiktraore321@gmail.com</a>
+          <br>
+          <a href="mailto:cheiktraore321@gmail.com" class="btn btn-primary">S’engager</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> — Sensibilisation à la protection des ressources naturelles
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
